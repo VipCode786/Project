@@ -1,14 +1,25 @@
 import express from "express";
+import mongoose from "mongoose";
 import companies from "../company/COMPANY.js";
 import User from "../user_Interface/USER.js";
+//import currentDayNumber from "current-day-number";
+import nodeCron from "node-cron"
 const UI = express.Router();
+//var currentDayNumber = require('current-day-number');
 
 
 UI.post('/post', async (req, res,next) => {
+    //const d =currentDayNumber('created_date');
+    // const job = nodeCron.schedule("* 1 * * * *", () => {
+    //     console.log(new Date().toLocaleString());
+    //   });
     const search = req.body.Company_name;
     //const a = search.replace(/\s+/g,'')
     const b =await companies.find({Company_name:{$regex:search,$options:'i'}})
-     console.log("B",b)
+    console.log("b...........",b[0]._id.toString())
+
+  
+     console.log("B",b[0]["_id"].toString())
     // .then(data=>{
     //     res.send(data);
     // })
@@ -19,8 +30,11 @@ UI.post('/post', async (req, res,next) => {
         Address:req.body.Address,
         Age:req.body.Age,
         Gender:req.body.Gender,    
-        Company_name: req.body.Company_namea,
-        item: req.body.item
+        Company_name: req.body.Company_name,
+        item: req.body.item,
+        company:b[0]["_id"].toString(),
+       // created_date:req.body.created_date
+        count:req.body.count
     })
 
     
@@ -56,9 +70,10 @@ UI.get('/getAll', async (req, res) => {
 })
 //Get by ID Method
 UI.get('/getOne/:id', async (req, res) => {
+//const id = (req.params.id).toString()
     try {
-        const data = await User.findById(req.params.id);
-        res.json(data)
+        const data = await User.findById(req.params.id).populate("company")
+        res.json(data) 
     }
     catch (error) {
         res.status(500).json({ message: error.message })
