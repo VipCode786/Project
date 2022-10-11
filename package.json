@@ -1,0 +1,27 @@
+{
+  "name": "inventorymanagement",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Created by vipul gupta\t",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon --watch backend backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VipCode786/Project.git"
+  },
+  "author": "Vipul Gupta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VipCode786/Project/issues"
+  },
+  "homepage": "https://github.com/VipCode786/Project#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.0",
+    "nodemon": "^2.0.19"
+  }
+}
