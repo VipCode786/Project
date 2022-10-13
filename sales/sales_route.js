@@ -4,15 +4,14 @@ import Supplier from "../sales/sales.js";
 const SR = express.Router();
 
 SR.post('/post', async (req, res) => {
-
     const data = new Supplier({
         Name:req.body.Name,
         Email:req.body.Email,
         Phone:req.body.Phone,
         BillingAddress:req.body.BillingAddress,
-        ShippingAddress:req.body.ShippingAddress
+        ShippingAddress:req.body.ShippingAddress,
+        //id:f
     })
-
     try {
         const dataToSave = await data.save();
         res.status(200).json(dataToSave)
