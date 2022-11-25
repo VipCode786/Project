@@ -49,6 +49,58 @@ product_route.get('/getOne/:id', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+//transfer from one to multiple
+product_route.put('/transferPro', expressAsyncHandler(async (req, res) => {
+    const products =await  Product.findById("6350e08b94caa6534830c2b9")
+    // console.log(products)
+    // const source= await products.findById("63512462630e0308d49ea1e7")
+   const source= products.warehouseStock?.forEach((item)=>
+   {
+//    console.log(item)
+
+     if (item.warehouse =="63512462630e0308d49ea1e7")
+     {
+
+        function transfer( id ,qty)
+        {
+         item.QTY=item.QTY-qty;
+         
+        
+         products.warehouseStock?.forEach((i)=>
+            { console.log("abhi",i)
+             
+               if (i.warehouse ==id){
+                
+                i.QTY=i.QTY+qty
+                console.log(i.QTY) 
+               }
+               else{
+                console.log("chlooo",i.warehouse)
+               }
+
+            } 
+            )    
+        
+     }
+       
+        const destination =[{id:"63809e4f4e13bc37ec6055f4", QTY:10},{ id:"63512da8865e1a52f46af7dc",QTY:20}]
+        for (let i=0;i<destination.length;i++)
+{
+    // console.log(i)
+   destination[i];
+  console.log("A",destination.length);
+   transfer(destination[i].id, destination[i].QTY);
+
+
+}
+products.save()
+     }
+   }
+   )
+
+    // console.log(source)
+
+}))
 
 //Update by ID Method
 product_route.patch('/update/:id', async (req, res) => {
